@@ -1,55 +1,58 @@
-<div [formGroup]="profileForm">
-  <label for="nombre">Nombre: </label>
-  <input id="nombre" type="text" formControlName="nombre">
-  @if (profileForm.controls['nombre'].hasError('required')) {
-    <span style="color: red;">*</span>
-  }
-
-  <br>
-  <label for="apellidos">Apelllidos: </label>
-  <input id="apellidos" type="text" formControlName="apellidos">
-  <!-- <br>
-  <label for="edad">Edad: </label>
-  <input id="edad" type="text" formControlName="edad"> -->
-<br>
-  <!--<label for="email">Email</label>
-   <input id="email" formControlName="email">
-  @if (profileForm.controls['email'].hasError('required')) {
-    <span style="color: red;">*</span>
-  }
-  @if (profileForm.controls['email'].hasError('email')) {
-    <span style="color: red;">El correo debe tener formato de email</span>
+<div [formGroup]="profileForm" class="formulario">
+  <mat-form-field>
+    <mat-label>Nombre: </mat-label>
+    <input matInput formControlName="nombre" />
+  </mat-form-field>
+  <!-- @if (profileForm.controls['nombre'].hasError('required')) {
+  <span style="color: red">*</span>
   } -->
+  <mat-form-field>
+    <mat-label>Apelllidos: </mat-label>
+    <input matInput formControlName="apellidos" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" />
+  </mat-form-field>
+  <!-- @if (profileForm.controls['email'].hasError('required')) {
+    <span style="color: red;">*</span>
+  }-->
+  @if (profileForm.controls['email'].hasError('email')) {
+  <span style="color: red">El correo debe tener formato de email</span>
+  }
   <div formGroupName="direccion">
     <h2>Dirección</h2>
-    <div>
-      <label for="calle">Calle: </label>
-      <input id="calle" type="text" formControlName="calle">
-    </div>
-    <div>
-    <label for="localidad">Localidad: </label>
-    <input id="localidad" type="text" formControlName="localidad">
-    </div>
-    <div>
-      <label for="provincia">Provincia: </label>
-      <input id="provincia" type="text" formControlName="provincia">
-    </div>
-    <div>
-      <label for="codPostal">Código Postal: </label>
-      <input id="codPostal" type="text" formControlName="codPostal">
-    </div>
-
+    <mat-form-field class="w-100">
+      <mat-label>Calle: </mat-label>
+      <input matInput formControlName="calle" />
+    </mat-form-field>
+    <mat-form-field style="margin-right: 10px;">
+      <mat-label for="localidad">Localidad: </mat-label>
+      <input matInput type="text" formControlName="localidad" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label for="provincia">Provincia: </mat-label>
+      <input matInput id="provincia" type="text" formControlName="provincia" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label for="codPostal">Código Postal: </mat-label>
+      <input matInput formControlName="codPostal" />
+    </mat-form-field>
   </div>
   <div formArrayName="aliases">
     <h2>Aliases</h2>
-    <button type="button" (click)="addAlias()">+ Add another alias</button>
+    <button mat-button type="button" (click)="addAlias()">+ Add another alias</button>
 
-    <div *ngFor="let alias of aliases.controls; let i=index">
+    <mat-form-field *ngFor="let alias of aliases.controls; let i = index">
       <!-- The repeated alias template -->
-      <label for="alias-{{ i }}">Alias:</label>
-      <input id="alias-{{ i }}" type="text" [formControlName]="i">
-    </div>
+      <mat-label >Alias:</mat-label>
+      <input matInput [formControlName]="i" />
+    </mat-form-field>
   </div>
-  <button [disabled]="profileForm.invalid " (click)="onSubmit()">Enviar</button>
+  <button mat-button [disabled]="profileForm.invalid" (click)="onSubmit()">Enviar</button>
   <!-- <button type="button" (click)="actualiza()">Actualizar</button> -->
 </div>
+
+@for (item of aliases.controls; track $index) {
+<p>{{ item.value }}</p>
+}

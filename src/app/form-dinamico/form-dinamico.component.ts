@@ -1,11 +1,13 @@
 import { NgFor } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { MaterialModule } from '../material/material/material.module';
+
 
 @Component({
   selector: 'app-form-dinamico',
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor],
+  imports: [ReactiveFormsModule, NgFor, MaterialModule],
   templateUrl: './form-dinamico.component.html',
   styleUrl: './form-dinamico.component.css'
 })
@@ -17,6 +19,7 @@ export class FormDinamicoComponent {
   profileForm = this.formBuilder.group({
     nombre: ['', Validators.required],
     apellidos: [''],
+    email: ['', [Validators.required, Validators.email]],
     direccion: this.formBuilder.group({
       calle: [''],
       localidad: [''],
@@ -31,13 +34,14 @@ export class FormDinamicoComponent {
   }
 
   addAlias() {
-    this.aliases.controls.push(this.formBuilder.control(''));
+    this.aliases.controls.push(new FormControl(''));
+    console.log(this.aliases.controls);
   }
 
   onSubmit(){
     const i = this.aliases.controls.length;
     for(let j=0;j<i;j++){
-      console.log(this.aliases.controls[j]);
+      console.log(this.aliases.controls[j].value);
 
     }
 
